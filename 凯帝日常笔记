@@ -1,0 +1,214 @@
+我知道了如何团队协作，如何使用项目管理工具，项目版本如何控制实现，
+我们写的代码如何在线上运行
+
+明确你的项目到底是做什么的，有哪些功能
+明确你的项目整体架构    从哪里调用到哪里  使用什么调用
+明确你的模块在整个应用中用到了什么技术
+
+1.static、final、transient等关键字的作用  
+
+static：方法就是没有this的方法，在static方法内部不能调用费静态方法，反过来
+	是可以的，而且可以在内用创建任何对象的前提下，仅仅通过类本身
+	类调用static方法，这正是static方法的主要用途
+       static 方法：
+       static 变量：静态变量被所有对象所共享，在内存中只有一个副本，它当且晋档在类初	
+
+次加载时会被初始化，而非静态变量是对象所拥有的，在创建对象的时候被初始	化，存
+
+在多个副本，哥哥对象拥有的副本互不影响
+	static成员变量的初始化顺序按照自定义的顺序进行初始化
+       static  代码块：用静态代码块优化程序性能，static块可以置于类中的任何地方，类中可	
+
+以有多个static块 （一般只需要进行一次初始化操作）
+
+	注意：在java中 static是不允许用来修饰局部变量的
+
+
+
+static：修饰变量，修饰方法，
+   静态代码块
+	静态内部类
+
+静态包
+	&&&这里还缺少关于静态内部类的解释
+
+foreach循环的原理
+	对于list  会调用Iterable 接口的Iterator 方法来循环遍历
+	数组的元素    迭代器模式的实现
+	对于数组  就是转化为数组中的每一个元素的循环引用
+
+
+volidate关键字底层实现的原理
+	volidate修饰的成员变量在每次被线程访问时候，都强迫从主存中
+	重读该成员变量的值，而且，当成员变量发生变化时，强迫线程
+	将变化的值回写到主存，这样在任何时刻，两个不用的线程总是
+	看到某个成员变量的同一个值
+	volidate 就是提醒VM，对于这个成员变量不能保存它的私有考培，
+	而应该直接与共享成员交换
+补充说明：transient
+	当持久化对象时，可能有一个特殊的对象数据成员，我们不想用
+	Serialization机制保存它，为了在一个特定对象一个域上关闭serialization，
+	可以加上这个关键字
+	transient是java语言的关键字，用来表示一个域不是该对象串行化的一
+	部分
+2.集合  list  set  map
+ArrayList  LinkedList  Hashtable HashMap
+ConcurrentHashMap  HashSet 实现原理
+
+ps：CopyOnWrite容器和Queue
+@1 ConcurrentHashMap  的锁分段技术
+@2 ConcurrentHashMap   的读写是否要加锁 为什么
+@3  ConcurrentHashMap  迭代器是强一直性还是弱一致性
+
+3.设计模式 
+需要画出相应的类图
+
+4.多线程
+Thread和Runnable的区别和联系
+	Thread类实在java.lang包中定义的，一个类只要继承了thread
+	类同时覆写了本类中的run() 方法就可以实现多线程操作了，但是一个类
+	只能继承一个父类，这是此方法的局限性
+	private native void start()  //native 表示调用操作系统的底层函数
+
+	public Thread(Runnable target)
+	在使用Runnable定义的子类中没有start() 方法 只有Thread 类中才有
+使用runnable接口的好处：
+	避免了继承的局限，一个类可以继承多个接口
+	适合于资源的共享
+
+	联系：public class Thread extends Object implements Runnable
+		发现Thread类也是Runnable接口的子类
+多次start一个线程会怎样
+	可以重复调用run()方法  start()只调用一次 开启线程
+	如果多次开启线程 或报出illegalThreadStateException
+
+
+
+线程池
+作用：限制系统中执行线程的数量
+Java里面线程池的定级接口是Executor，但严格意义上讲并不是一个线程池，而是一个执行线程的工具。真正的线程池接口是ExecutorService
+
+
+5.IO分为File IO 和Socket IO
+File IO是阻塞IO
+
+~！NIO并不是严格意义上的非阻塞IO而应该属于多路复用IO
+
+NIO会阻塞在Selector的select方法上
+
+Netty 这是一个当前NIO最好的框架（Mina也不错）
+
+6.JDK源码
+CAS  AtomicInteger实现原理
+automicInteger 通俗的解释：对某个内存值拷贝一个副本，某个线程读到该副本，并对其进行计算，输出结果，在写入内存时，再次取出内存值和该副本进行比较，若副本和内存值相同，则把新的值写入内存。
+CAS（有三个操作数：内存值V，旧的预期值A，要修改的新值B）是它的一种实现，
+Object类中的方法以及每个方法的作用
+Registernatives
+getClass()
+hashCode()
+Equals(Object obj)
+Clone()
+toString()
+Notify()
+notifyAll()
+Wait(long timeout)
+Wait(long timeout,int nanos)
+Wait()
+Finalize() 是object的protected方法，子类可以覆盖该方法实现资源清理工作，GC在回收对象之前调用该方法
+注意：在java中，finalize() 的调用具有不确定性
+
+
+
+7.框架
+bean工厂实现的UML图
+
+8. 数据库
+union 和 union all 的区别
+ Union是取唯一值，记录没有重复
+  Union all 取到的是所有的值，记录有可能重读
+9.数据结构和算法分析
+
+索引使用的是那种数据结构  使用的是树  为什么Collections.sort 用的是那种排序  B树或者B+树
+
+索引是对数据库表中一列或多列的值进行排序的一种结构，使用索引可以快速访问数据库表中的特定信息  索引是用来定位的
+10.Java 虚拟机
+
+  Java 虚拟机的内存布局
+  GC算法及集中垃圾收集器
+  类加载机制  也就是双亲委派模型
+  Java内存模型
+  happens-before的规则
+  volidate 关键字的是使用规则
+
+11.Web
+  分布式Session的几种实现方式（常用的四种）
+<1> 基于数据库的Session共享
+<2> 基于NFS共享文件系统
+<3>基于memcache的session，如何保证memcache本身的高可用性
+<4>基于resin/tomcat web容器本身的session复制机制
+<5> 基于TT/Redis 或jbosscache进行session共享
+<6>基于cookie 进行sesion共享
+
+  sesision和cookie的区别和联系
+<1>Session保存在服务器，客服端不知道其中的信息，cookie保存在本地，服务器能够知道cookie的信息
+<2>session中保存的是对象，cookie中保存的是字符串
+<3>session不能区分路径，同一个用户在访问一个网站期间，所有的session在任何地方都可以访问到，而cookie中如果设置了路径参数，那么同一个网站中的不同路径下的cookie互相访问是不行的
+<4>session 需要借助cookie才能正常工作，如果客户端完全禁止cookie，session将失效
+
+购物车的实现逻辑：
+Session是一种保存上下文信息的机制，他是针对每一个用户的变量值保存在服务器端，通过sessionID来区分不同的客户，session是以cookie或URL重写为基础的，默认使用cookie
+Persistent cookie(cookie)
+Session cookie(URl 重写)
+
+补充知识：
+Equals() 源码
+Public boolean equals(Object obj) {
+Return (this == obj);
+}
+直接用 == 比较对象的地址
+String类源码重写equals方法
+Public boolean equals(Object anObject) {
+If(this == anObject) {
+Return true;
+}
+If(anObject instanceof String) {
+String anotherString = (String) anObject;
+Int n = value.length;
+If(n == anotherString.value.length) {
+Char v1[] = value;
+Char v2[] = anotherString.value;
+Int i = 0;
+While (n-- != 0) {
+If(v1[i] != v2[i])
+Return false;
+I++;
+}
+Return true;
+}
+}
+Return false;
+}
+String 类中的equals首先比较地址，如果是同一个对象的引用，克制对象相等，返回true
+如果不是同一个对象，挨个比较两个字符串对象内的字符，只有完全相等才返回true，否则返回false
+
+3.Hashcode
+Hashcode是跟咧Object中的方法
+默认情况下，Object中的hashcode() 返回对象的32为jvm 内存地址，也就是说如果对象不重写该方法，则返回相应的32位为JVM内存地址
+Public　int hashCode() {
+Int h = hash;  
+If( h == 0 && value.length > 0) {
+Char val[] = val;
+For (int i = 0 ; i < value.length ;i++) {
+H = 32 * h + val[i];
+}
+Hash = h;
+}
+Return h;
+}
+
+
+一些系统建成：
+CRM：客户关系管理系统
+是利用信息科学技术，实现市场营销、销售、服务等活动自动化，使企业能更高效地位客户提供满意、周到的服务，以提高客户满意度，忠诚度为目的的一种管理营销方式。客户关系管理既是一种管理理念，又是一种软件技术。以客户为中心的管理理念是CRM实施的基础。
+ERP：企业资源计划
+是建立在信息技术的基础上，集信息技术与先进的管理思想于一身，以系统化的管理思想，为企业员工及决策层提供决策手段的管理平台。
